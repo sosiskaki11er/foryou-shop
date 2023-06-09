@@ -1,13 +1,368 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+@import url('./Pages/HomeStyles.css');
+@import url('./Pages/CatalogueStyles.css');
+@import url('./Pages/ProductPageStyles.css');
+
+@font-face {
+  font-family: Montserratt-Bold;
+  src: url('./assets/fonts/Montserrat-Bold.ttf');
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+@font-face {
+  font-family: Montserratt-SemiBold;
+  src: url('./assets/fonts/Montserrat-SemiBold.ttf');
+}
+
+@font-face {
+  font-family: Montserratt-Medium;
+  src: url('./assets/fonts/Montserrat-Medium.ttf');
+}
+
+:root{
+  --header-font: Montserratt-Bold;
+  --highlight-font: Montserratt-SemiBold;
+  --text-font: Montserratt-Medium;
+  --text-font-color: #000;
+  --secondary-font-color: #828282;
+  --highlight-font-color: #5900E6
+}
+
+body {
+  font-family: var(--text-font);
+  background-color: #fff;
+  padding: 0px;
+  margin: 0px;
+}
+
+ul {
+  display: flex;
+  justify-content: space-between;
+  gap: 24px;
+  font-family: var(--highlight-font);
+}
+
+ul > li {
+  display: inline;
+  margin: 12px 4px;
+}
+
+li > a {
+  text-decoration: none;
+  color: #000;
+}
+
+h2{
+  font-size: 2.5rem;
+  margin: 0px auto;
+  font-family: var(--header-font);
+}
+
+h3{
+  font-size: 1.25rem;
+  margin: 0;
+}
+
+h4{
+  font-size: 1.125rem;
+  margin: 0;
+}
+
+h5{
+  margin: 0px;
+  color: #828282;
+  font-size: 0.875rem;
+}
+
+.wrapper {
+  max-width: 1420px;
+  display: flex;
+  justify-content: space-between;
+  margin: 0px auto;
+  overflow: hidden;
+}
+
+#header-mobile{
+  display: none;
+}
+
+.container {
+  display: flex;
+  justify-content: space-between;
+  margin: auto 0px;
+}
+
+.container > a {
+  margin: auto;
+  text-decoration: underline;
+  text-decoration-style: dashed;
+  text-underline-offset: 5px;
+  color: var(--secondary-font-color);
+  margin-left: 4px;
+}
+
+.container.footer{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 0px;
+  margin: 0px;
+  max-width: 461px;
+  max-height: 194px;
+  gap: 24px;
+}
+
+.container.footer > p {
+  font-size: 0.875rem;
+  line-height: 1.375rem;
+  margin: 0px;
+}
+
+.container.footer > a {
+  margin: 0px;
+}
+
+.container.net{
+  max-width: 144px;
+  margin: 0px;
+}
+
+.container.credits {
+  margin-top: 148px;
+}
+
+.container.credits > .container{
+  gap: 40px;
+  color: #BDBDBD;
+}
+
+.search-input{
+  padding: 12px;
+  border-radius: 8px;
+  transition: 0.3s;
+  position: relative;
+  right: -500%;
+  z-index: 1;
+  border: 1px solid #E0E0E0;
+  transition: 0.3s;
+  width: 0px;
+}
+
+.search-input.active{
+  right: -40px;
+  width: 300px;
+  display: block;
+}
+
+.search-input::placeholder{
+  font-family: var(--text-font);
+  color: #E0E0E0;
+}
+
+.container.search{
+  background-color: #fff;
+  border-radius: 8px;
+  position: relative;
+  overflow: hidden;
+}
+
+.container.search > img {
+  z-index: 10;
+  margin-right: 20px;
+  cursor: pointer;
+}
+
+.cart-wrapper{
+  position: relative;
+  display: flex;
+  padding: 12px;
+}
+
+.products-in-cart{
+  position: absolute;
+  top: 0px;
+  right: -6px;
+  color: white;
+  font-family: var(--highlight-font-color);
+  width: 20px;
+  height: 20px;
+  display: flex;
+  justify-content: center;
+  border-radius: 50%;
+  font-size: 0.8rem;
+  background-color: var(--highlight-font-color);
+}
+
+.products-in-cart > span{
+  margin: auto;
+}
+
+.container.panel > img {
+  margin: 12px;
+}
+
+.container.language {
+  color: #828282;
+  font-family: var(--highlight-font);
+  cursor: pointer;
+}
+
+.footer{
+  background-color: #232323;
+  width: 100%;
+  padding: 120px 0px;
+  color: #fff;
+}
+
+.footer > .wrapper {
+  flex-direction: column;
+  max-height: 364px;
+}
+
+.footer-nav{
+  flex-direction: column;
+  padding: 0px;
+  font-size: 1rem;
+}
+
+.footer-nav > li {
+  display: block;
+  margin: 0px;
+}
+
+.footer-nav > li > a{
+  color: white;
+}
+
+.container.help{
+  max-width: 432px;
+  flex-grow: 1;
+  gap: 104px;
+}
+
+.Carousel__RailWrapper-sc-hyhecw-1.bhHnmT{
+  margin: 0px;
+}
+
+#menu{
+  display: none;
+}
+
+@media screen and (max-width: 360px) {
+  .wrapper{
+    max-width: 320px;
+  }
+
+  #header{
+    display: none;
+  }
+
+  #header-mobile{
+    display: flex;
+    height: 72px;
+    margin-bottom: 24px;
+  }
+
+  #header-mobile > .container{
+    flex-grow: 1;
+    justify-content: space-between;
+  }
+
+  #header-mobile > .container > a{
+    margin: auto;
+  } 
+
+  #header-mobile > .container > img{
+    margin: auto 0px;
+    cursor: pointer;
+  }
+
+  #menu{
+    display: flex;
+    position: fixed;
+    bottom: 0px;
+    height: 80px;
+    background-color: #fff;
+    padding: 0px 8px;
+    width: 344px;
+    justify-content: space-between;
+  }
+
+  .menu-item{
+    width: 80px;
+    height: 80px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .menu-item > img {
+    margin: auto;
+  }
+
+  .menu-item.active > img{
+    padding: 5px 25px;
+    background-color: #F1F1FE;
+    border-radius: 500px;
+  }
+
+  .menu-item > h6{
+    font-size: 0.75rem;
+    margin: auto;
+  }
+
+  .menu-item > .cart-wrapper{
+    width: 24px;
+    margin: 0px auto;
+  }
+
+  .footer{
+    padding: 80px 0px;
+  }
+
+  .footer > .wrapper{
+    max-height: 728px;
+    flex-grow: 1;
+    gap: 80px;
+  }
+
+  .footer > .wrapper > .container{
+    flex-direction: column;
+    gap: 80px;
+  }
+
+  .container.footer{
+    max-height: 284px;
+  }
+
+  .container.credits{
+    flex-direction: column;
+    margin-top: 0px;
+  }
+
+  .container.credits > .container{
+    font-size: 0.875rem;
+    gap: 30px;
+    margin-right: auto;
+  }
+
+  #credits{
+    gap: 24px;
+  }
+
+  .container.footer > ul{
+    margin-top: 0px;
+    margin-bottom: auto;
+  }
+
+  .container.footer > ul > li{
+    font-family: var(--highlight-font);
+    font-size: 1rem;
+  }
+
+  .container.help{
+    gap: 16px;
+  }
+
+  .container.help > .container.footer{
+    max-width: 140px;
+  }
 }
