@@ -72,6 +72,10 @@ h5{
   font-size: 0.875rem;
 }
 
+nav > ul > li {
+  cursor: pointer;
+}
+
 .wrapper {
   max-width: 1420px;
   display: flex;

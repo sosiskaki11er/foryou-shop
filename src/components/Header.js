@@ -6,10 +6,11 @@ import FavIcon from '../assets/icons/heart.svg'
 import Cart from './Cart'
 import Logo from './Logo'
 import Menu from '../assets/icons/menu.svg'
-
+import {useNavigate} from 'react-router-dom'
 
 function Header() {
     const [search, setSearch] = useState(false)
+    const navigate = useNavigate()
 
     const clickHandler = () => {
         setSearch(!search)
@@ -23,11 +24,11 @@ function Header() {
 
                     <nav>
                         <ul>
-                            <li><a href='/futbolki'>Футболки</a></li>
-                            <li><a href='/longsliv'>Лонгслив</a></li>
-                            <li><a href='/svitshot'>Свитшоты</a></li>
-                            <li><a href='/hudi'>Худи</a></li>
-                            <li><a href='/kepki'>Кепки</a></li>
+                            <li><a onClick={() => navigate('/catalogue/Футболки')}>Футболки</a></li>
+                            <li><a onClick={() => navigate('/catalogue/Лонгсливы')}>Лонгслив</a></li>
+                            <li><a onClick={() => navigate('/catalogue/Свитшоты')}>Свитшоты</a></li>
+                            <li><a onClick={() => navigate('/catalogue/Худи')}>Худи</a></li>
+                            <li><a onClick={() => navigate('/catalogue/Кепки')}>Кепки</a></li>
                         </ul>
                     </nav>
                 </div>
