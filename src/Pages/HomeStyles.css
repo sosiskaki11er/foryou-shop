@@ -31,6 +31,7 @@
     position: relative;
     max-width: 726px;
     flex-grow: 1;
+    max-height: 290px;
 }
 
 .banner > div {
