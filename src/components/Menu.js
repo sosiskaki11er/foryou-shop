@@ -19,12 +19,12 @@ function Menu() {
 
         <div className='menu-item'>
             <img src={FavIcon} alt='fav'/>
-            <h6>Главная</h6>
+            <h6>Избранное</h6>
         </div>
 
         <div className='menu-item'>
             <Cart/>
-            <h6>Главная</h6>
+            <h6>Корзина</h6>
         </div>
     </div>
   )

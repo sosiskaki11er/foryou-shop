@@ -1,11 +1,9 @@
 import React, { useState } from 'react'
 import Arrow from '../assets/icons/Arrow.svg'
-import {useNavigate} from 'react-router-dom'
 
 const sizes = ['Все размеры', 'XS', 'M', 'L', 'XL', '2XL'];
 
 function Size() {
-    const navigate = useNavigate()
     let chosenSizes = []
     const [show, setShow] = useState(false)
 
@@ -18,7 +16,7 @@ function Size() {
             chosenSizes.push(e.target.value)
         }
         else{
-            chosenSizes = chosenSizes.filter(size => size != e.target.value)
+            chosenSizes = chosenSizes.filter(size => size !== e.target.value)
         }
         console.log(chosenSizes)
     }

@@ -306,7 +306,40 @@
 .container.feedbacks{
     display: none;
 }
-@media screen and (max-width:360px){
+
+@media screen and (max-width: 1420px){
+    .show-img{
+        max-width: 400px;
+        max-height: 400px;
+    }
+
+    .gallery > img {
+        width: 75px;
+    }
+
+    .product-prices{
+        flex-direction: row;
+    }
+}
+
+@media screen and (max-width:1020px){
+    #product > .container{
+        flex-direction: column;
+    }
+
+    #product > .container > .container{
+        margin: 0px auto;
+    }
+}
+
+@media screen and (max-width:720px){
+    .Carousel__Rail-sc-hyhecw-2.sEueG{
+        max-width: 120px;
+        padding: 0px;
+    }
+}
+
+@media screen and (max-width:540px){
     .gallery > img {
         display: none;
     }
@@ -322,9 +355,6 @@
     #product > .container {
         margin-right: 0px;
         flex-direction: column;
-    }
-    
-    #product > .container > .container{
     }
     
     .product-info{

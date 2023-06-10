@@ -34,7 +34,7 @@ function Header() {
                 </div>
                 
                 {!search &&
-                <div className='container'>
+                <div className='container tg'>
                     <img src={TgIcon} alt='telegram icon' width={24}/>
                     <a href='https://inweb.uz/'>Написать в телеграм</a>
                 </div>

@@ -250,7 +250,49 @@ nav > ul > li {
   display: none;
 }
 
-@media screen and (max-width: 360px) {
+@media screen and  (max-width: 1420px){
+  .wrapper{
+    max-width: 1020px;
+  }
+
+  .container > nav{
+    display: none;
+  }
+
+  h2{
+    font-size: 1.8rem;
+  }
+}
+
+@media screen and (max-width:1020px){
+    .wrapper{
+      max-width: 720px;
+    }
+
+    .container.footer{
+      max-width: 300px;
+    }
+
+    .container.help{
+      max-width: 330px;
+    }
+}
+
+@media screen and (max-width: 720px){
+  .wrapper{
+    max-width: 520px;
+  }
+
+  .container.tg{
+    display: none;
+  }
+
+  .footer > .wrapper > .container{
+    gap: 30px;
+  }
+}
+
+@media screen and (max-width: 540px) {
   .wrapper{
     max-width: 320px;
   }
@@ -286,7 +328,7 @@ nav > ul > li {
     height: 80px;
     background-color: #fff;
     padding: 0px 8px;
-    width: 344px;
+    width: 100%;
     justify-content: space-between;
   }
 
