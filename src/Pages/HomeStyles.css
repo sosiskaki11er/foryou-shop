@@ -744,6 +744,7 @@ form > .container{
 
     .banner > img{
         max-height: 162px;
+        right: 0px;
     } 
 
     .banner > div {
@@ -824,6 +825,13 @@ form > .container{
         padding: 27px;
         height: 266px;
         background-color: #ECEDEE;
+        max-width: 266px;
+        min-width: 266px;
+    }
+
+    .small-categorys{
+        max-width: 320px;
+        margin: 0px;
     }
 
     .category.small{
@@ -831,14 +839,17 @@ form > .container{
         padding-top: 26px;
         max-height: 109px;
         background-color: #ECEDEE;
+        min-width: 286px;
     }
 
     .category.small > img {
         max-height: 152px;
+        max-width: 266px;
     }
 
     .category.big > img{
         max-height: 320px;
+        right: 0px;
     }
 
     .category-desc{
