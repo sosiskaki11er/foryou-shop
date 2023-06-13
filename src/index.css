@@ -130,7 +130,7 @@ nav > ul > li {
 }
 
 .container.credits {
-  margin-top: 148px;
+  margin-bottom: 0px;
 }
 
 .container.credits > .container{
@@ -218,7 +218,11 @@ nav > ul > li {
 
 .footer > .wrapper {
   flex-direction: column;
-  max-height: 364px;
+  height: 364px;
+}
+
+.footer > .wrapper > .container{
+  margin: 0px;
 }
 
 .footer-nav{
@@ -364,6 +368,7 @@ nav > ul > li {
 
   .footer{
     padding: 80px 0px;
+    padding-bottom: 160px;
   }
 
   .footer > .wrapper{

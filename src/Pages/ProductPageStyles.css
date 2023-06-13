@@ -61,6 +61,7 @@
 
 .product-size:hover{
     border-color: #5900E6;
+    color: #5900E6;
 }
 
 .product-size.active{

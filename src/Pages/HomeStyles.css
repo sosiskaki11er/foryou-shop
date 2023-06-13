@@ -171,7 +171,7 @@ a.button {
 }
 
 #slider-next{
-    left: 1362px;
+    left: 1350px;
 }
 
 #slider-next-banner{
@@ -333,9 +333,11 @@ form > .container{
 }
 
 #faq{
-    margin-top: 320px;
+    margin-top: 240px;
     gap: 80px;
     flex-direction: column;
+    background-color: #F1F1FE;
+    padding: 80px 250px;
 }
 
 #faq > .container{
@@ -537,7 +539,6 @@ form > .container{
         max-width: 152px;
         font-size: 0.875rem;
         position: relative;
-        height: 256px;
         transition: 0.3s;
         margin-bottom: 14px;
     }
@@ -932,7 +933,7 @@ form > .container{
     #faq{
         max-width: 320px;
         padding: 64px 20px;
-        background-color: #F1F1FE;
+
         margin-top: 120px;
         gap: 40px;
     }
@@ -1044,7 +1045,6 @@ form > .container{
         max-width: 152px;
         font-size: 0.875rem;
         position: relative;
-        height: 256px;
         transition: 0.3s;
         margin-bottom: 14px;
     }
