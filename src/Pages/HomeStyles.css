@@ -948,6 +948,8 @@ form > .container{
         display: flex;
         flex-direction: column;
         margin-bottom: 40px;
+        max-width: 320px;
+        margin: auto;
     }
     
     #faq > .container > h2{
@@ -990,6 +992,8 @@ form > .container{
     .questions{
         flex-direction: column;
         gap: 40px;
+        max-width: 320px;
+        margin: auto;
     }
 
     #ads{
