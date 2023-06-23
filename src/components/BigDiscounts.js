@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import Carousel from 'better-react-carousel'
 import SliderPrevIcon from '../assets/icons/slider-prev.svg'
 import SliderNextIcon from '../assets/icons/slider-next.svg'
@@ -7,6 +7,7 @@ import SliderNextIconActive from '../assets/icons/slider-next-active.svg'
 import ProductCard from './ProductCard'
 import Image from '../assets/images/image 10.png'
 import ProductCardMobile from './ProductCardMobile'
+import axios from 'axios'
 
 const product = {
     img: [Image],
@@ -28,6 +29,7 @@ function SliderPrev({banner}) {
 }
 
 function SliderNext({banner}) {
+
     return (
         <img 
         src={SliderNextIcon} 
@@ -39,49 +41,33 @@ function SliderNext({banner}) {
 }
 
 function BigDiscounts({catalogue}) {
+    const [bigDiscounts, setBigDiscounts] = useState([])
+
+    useEffect(() => {
+        axios.get('https://api.foryou.uz/api/getProducts?big_discount=1')
+        .then(response => setBigDiscounts(response.data.data))
+      },[])
+
   return (
     <div className='wrapper' id='big-discounts' style={{marginBottom:catalogue ? '168px' : '132px'}}>
         <h2>Большие скидки</h2>
         <div className='big-discounts-slider'>
             <Carousel cols={4} arrowLeft={<SliderPrev/>} arrowRight={<SliderNext/>}>
+                {bigDiscounts.map(big_discount => 
                         <Carousel.Item>
-                            <ProductCard product={product} />
+                            <ProductCard product={big_discount} />
                         </Carousel.Item>
-                        <Carousel.Item>
-                            <ProductCard product={product} />
-                        </Carousel.Item>
-                        <Carousel.Item>
-                            <ProductCard product={product} />
-                        </Carousel.Item>
-                        <Carousel.Item>
-                            <ProductCard product={product} />
-                        </Carousel.Item>
-                        <Carousel.Item>
-                            <ProductCard product={product} />
-                        </Carousel.Item>
-                        <Carousel.Item>
-                            <ProductCard product={product} />
-                        </Carousel.Item>
+                    )}
             </Carousel>
         </div>
 
         <div className='big-discounts-slider-mobile'>
             <Carousel cols={2} gap={12} arrowLeft={<SliderPrev/>} arrowRight={<SliderNext/>}>
-                <Carousel.Item>
-                    <ProductCardMobile product={product} list={false}/> 
-                </Carousel.Item>
-
-                <Carousel.Item>
-                    <ProductCardMobile product={product} list={false}/> 
-                </Carousel.Item>
-
-                <Carousel.Item>
-                    <ProductCardMobile product={product} list={false}/> 
-                </Carousel.Item>
-
-                <Carousel.Item>
-                    <ProductCardMobile product={product} list={false}/> 
-                </Carousel.Item>
+                {bigDiscounts.map(big_discount => 
+                    <Carousel.Item key={big_discount.id}>
+                        <ProductCardMobile product={big_discount} list={false}/> 
+                    </Carousel.Item>
+                    )}
             </Carousel>
         </div>
     </div>

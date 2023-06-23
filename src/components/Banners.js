@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import BannerBg from '../assets/images/banner.png'
 import ProductCard from './ProductCard'
 import Image from '../assets/images/image 10.png'
@@ -12,16 +12,9 @@ import Mens from '../assets/images/23feb.png'
 import AI from '../assets/images/ai.png'
 import Wednesday from '../assets/images/wednesday.png'
 import Popular from '../assets/images/popular.png'
+import axios from 'axios'
 
 const categories =  [Valentine, Mens, AI,Wednesday,Popular]
-
-const product = {
-  img: [Image],
-  price: '120.000 сум',
-  prevPrice: '160.000 сум',
-  discount:'20%',
-  desc: 'Футболка oversize 3D унисекс Аниме Tokyo Revengers: дракон'
-}
 
 function SliderPrev({banner}) {
     return (
@@ -46,6 +39,13 @@ function SliderNext({banner}) {
 }
 
 function Banners() {
+  const [bestsellers, setBestsellers] = useState([])
+
+  useEffect(() => {
+    axios.get('https://api.foryou.uz/api/getProducts?bestseller=1')
+    .then(response => setBestsellers(response.data.data))
+  },[])
+
   return (
     <>
       <div className='wrapper' id='banners'>
@@ -66,12 +66,11 @@ function Banners() {
             <div className='best-product'>
               <div className='slider'>
                   <Carousel cols={1} loop arrowLeft={<SliderPrev banner/>} arrowRight={<SliderNext banner/>}>
+                      {bestsellers.map(bestseller => 
                       <Carousel.Item>
-                          <ProductCard product={product} banner/>
+                          <ProductCard product={bestseller} banner/>
                       </Carousel.Item>
-                      <Carousel.Item>
-                          <ProductCard product={product} banner/>
-                      </Carousel.Item>
+                        )}
                   </Carousel>
               </div>
             </div>
@@ -112,12 +111,11 @@ function Banners() {
             <div className='best-product'>
               <h2>Хиты продаж</h2>
                   <Carousel cols={1} gap={50} loop arrowLeft={<SliderPrev banner/>} arrowRight={<SliderNext banner/>}>
+                  {bestsellers.map(bestseller => 
                       <Carousel.Item>
-                          <ProductCard product={product} banner/>
+                          <ProductCard product={bestseller} banner/>
                       </Carousel.Item>
-                      <Carousel.Item>
-                          <ProductCard product={product} banner/>
-                      </Carousel.Item>
+                        )}
                   </Carousel>
             </div>
 

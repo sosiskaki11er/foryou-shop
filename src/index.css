@@ -84,6 +84,10 @@ nav > ul > li {
   overflow: hidden;
 }
 
+#header > .container > a{
+  cursor: pointer;
+}
+
 #header-mobile{
   display: none;
 }

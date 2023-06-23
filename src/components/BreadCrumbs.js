@@ -1,10 +1,33 @@
-import React from 'react'
-import { useNavigate, useParams } from 'react-router-dom';
+import React, { useEffect, useState } from 'react'
+import { useLocation, useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import Arrow from '../assets/icons/arrow-path.svg'
+import axios from 'axios';
 
 function BreadCrumbs() {
   const navigate = useNavigate()
-  const params = useParams()['*']?.split('/');
+  const [searchParams,setSearchParams] = useSearchParams()
+  const [categoryId, setCategoryId] = useState(searchParams.get('category'))
+  const [category, setCategory] = useState()
+  const location = useLocation()
+
+  useEffect(() => {
+    if(categoryId !== null) {
+      axios.get(`https://api.foryou.uz/api/getSingleCategory/${categoryId}`)
+    .then(response => setCategory(response.data.data.name))
+    }
+    setCategoryId(searchParams.get('category'))
+  },[])
+
+  useEffect(() => {
+    setCategoryId(searchParams.get('category'))
+  },[location,categoryId])
+
+  useEffect(() => {
+    if(categoryId !== null) {
+      axios.get(`https://api.foryou.uz/api/getSingleCategory/${categoryId}`)
+    .then(response => setCategory(response.data.data.name))
+    }
+  },[categoryId])
 
   return (
     <div className='wrapper' id='breadcrumbs'>
@@ -19,7 +42,7 @@ function BreadCrumbs() {
             <h5><a >Главная</a></h5>
         </div>
 
-        <h2>{params[0]}</h2>
+        <h2>{category}</h2>
     </div>
   )
 }

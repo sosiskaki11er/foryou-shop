@@ -10,11 +10,14 @@ function getStars(starNum){
     for(let i=0;i<starNum;i++){
         result.push(Star)
     }
-    if(result.length < 5){
-        for(let i=0; i < 6-result.length;i++ ){
+    let emptyNum = 5 - result.length
+    if(emptyNum > 0){
+        for(let i=0; i < emptyNum;i++ ){
             result.push(EmptyStar)
         }
+        console.log(result)
     }
+    console.log(result)
     return result
 }
 
@@ -31,13 +34,13 @@ function SliderNext() {
 }
 
 function Feedback({feedback}) {
-    const stars = getStars(feedback.stars)
+    const stars = getStars(feedback.star)
   return (
     <div className='container' id='feedback'>
         <div className='container'>
             <div>
-                <h4 className='feedback-author'>{feedback.author}</h4>
-                <h5 className='feedback-date'>{feedback.date}</h5>
+                <h4 className='feedback-author'>{feedback.name}</h4>
+                <h5 className='feedback-date'>{feedback.phone}</h5>
             </div>
 
             <div className='stars'>
@@ -47,13 +50,12 @@ function Feedback({feedback}) {
             </div>
         </div>
 
-        <p>{feedback.desc}</p>
+        <p>{feedback.message}</p>
 
         <Carousel cols={4} arrowLeft={<SliderPrev/>} arrowRight={<SliderNext/>}>
-            {feedback.img.map( feedbackimg => 
             <Carousel.Item>
-                <img src={feedbackimg}/>
-            </Carousel.Item>)}
+                <img src={feedback.file} className='review-img'/>
+            </Carousel.Item>
         </Carousel>
     </div>
   )

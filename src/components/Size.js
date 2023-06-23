@@ -1,10 +1,30 @@
 import React, { useState } from 'react'
 import Arrow from '../assets/icons/Arrow.svg'
 
-const sizes = ['Все размеры', 'XS', 'M', 'L', 'XL', '2XL'];
+const sizes = [
+    {
+        id:1,
+        name:'XS'
+    },
+    {
+        id:2,
+        name:'M'
+    },
+    {
+        id:3,
+        name:'L'
+    },
+    {
+        id:4,
+        name:'XL'
+    },
+    {
+        id:5,
+        name:'XXL'
+    }
+];
 
-function Size() {
-    let chosenSizes = []
+function Size({Size, setSize}) {
     const [show, setShow] = useState(false)
 
     function handleClick(){
@@ -12,15 +32,14 @@ function Size() {
     }
 
     function handleChange(e){
-        if(chosenSizes.indexOf(e.target.value) === -1){
-            chosenSizes.push(e.target.value)
+        if(Size.indexOf(e.target.value) === -1){
+            setSize([...Size,e.target.value])
         }
         else{
-            chosenSizes = chosenSizes.filter(size => size !== e.target.value)
+            setSize(Size.filter(size => size !== e.target.value))
         }
-        console.log(chosenSizes)
     }
-
+    
   return (
     <div className='container' id='size'>
         <div className='filter-header'>
@@ -33,7 +52,11 @@ function Size() {
 
         {show &&
             <ul>
-                {sizes.map(size => <li key={size}><input type='checkbox' value={size} onChange={e => handleChange(e)}/><h4>{size}</h4></li>)}
+                {sizes.map(size => 
+                <li key={size.id}>
+                    <input type='checkbox' value={size.id} onChange={e => handleChange(e)} checked={Size.indexOf(String(size.id)) !== -1}/>
+                    <h4>{size.name}</h4>
+                </li>)}
                 
             </ul>
         }

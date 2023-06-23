@@ -1,5 +1,5 @@
-import React, { useState } from 'react'
-import {useLocation, useNavigate, useParams} from 'react-router-dom'
+import React, { useEffect, useState } from 'react'
+import {useLocation, useNavigate, useParams, useSearchParams} from 'react-router-dom'
 import Hit from '../assets/icons/hit.svg'
 import Tag from '../assets/icons/tag.svg'
 import New from '../assets/icons/new.svg'
@@ -17,412 +17,46 @@ import Image3 from '../assets/images/product/image 19-3.png'
 import Image4 from '../assets/images/product/image 19-4.png'
 import BigDiscounts from './BigDiscounts'
 import Carousel from 'better-react-carousel'
-
-const types = ["Футболки", "Лонгсливы", "Свитшоты", "Худи", "Кепки"]
-
-const Categories = [
-    {
-        title: 'Авторское'
-    }, 
-    {
-        title: 'Айти',
-        categories:[
-            'Программисту',
-            'Дизайнеру',
-            'Тестировщику',
-            'Админу',
-            'Меркетологу SMM/SEO',
-            'Project Manager',
-            'Back-Office'
-          ]
-    }, 
-    {
-        title: 'Арт'
-    }, 
-    {
-        title: 'Знаменитости'
-    }, 
-    {
-        title: 'Игры'
-    }, 
-    {
-        title: 'Кино Сериалы'
-    }, 
-    {
-        title: 'Комиксы'
-    }, 
-    {
-        title: 'Музыка'
-    }, 
-    {
-        title: 'Мультфильмы'
-    }, 
-    {
-        title: 'Надписи'
-    }, 
-    {
-        title: 'Разное'
-    }, 
-    {
-        title: 'Символика'
-    }, 
-    {
-        title: 'Спорт'
-    }, 
-    {
-        title: 'Футбол'
-    }
-]
-
-const products = [{
-    img: [MainImage,Image1,Image2,Image3,Image4],
-    price: '79.000 сум',
-    prevPrice: '119.000 сум',
-    discount:'',
-    desc: 'Мужская футболка хлопок Cyberpunk Samurai',
-    title: 'Cyberpunk Samurai',
-    article: 'Артикул: Cyber 03',
-    feedbacks: '512',
-    material: '92% хлопок, 8% эластан',
-    detailedDesc: 'Футболка из хлопка с добавлением эластана (аналог лайкры): за счет этого ткань немного тянется, хорошо держит форму и комфортно садится по фигуре. Силуэт приталенный, ориентирован на мужчин с широкими плечами и узкими бедрами. Понравится тем, кто хочет подчеркнуть достоинства своего торса и любит футболки “по фигуре”',
-    details: 'приталенный силуэт, круглый вырез ворота, длина до линии бедра, короткий рукав',
-    careRules: 'перед стиркой вывернуть наизнанку, стирка ручная или машинная в щадящем режиме при температуре не выше 30 градусов, без отбеливателя. Нельзя гладить по принту',
-    feedback: {
-        author:'Макар К.',
-        dete:'23 января 2023',
-        stars:5,
-    }
-},
-{
-    img: [MainImage,Image1,Image2,Image3,Image4],
-    price: '79.000 сум',
-    prevPrice: '119.000 сум',
-    discount:'',
-    desc: 'Мужская футболка хлопок Cyberpunk Samurai',
-    title: 'Cyberpunk Samurai',
-    article: 'Артикул: Cyber 03',
-    feedbacks: '512',
-    material: '92% хлопок, 8% эластан',
-    detailedDesc: 'Футболка из хлопка с добавлением эластана (аналог лайкры): за счет этого ткань немного тянется, хорошо держит форму и комфортно садится по фигуре. Силуэт приталенный, ориентирован на мужчин с широкими плечами и узкими бедрами. Понравится тем, кто хочет подчеркнуть достоинства своего торса и любит футболки “по фигуре”',
-    details: 'приталенный силуэт, круглый вырез ворота, длина до линии бедра, короткий рукав',
-    careRules: 'перед стиркой вывернуть наизнанку, стирка ручная или машинная в щадящем режиме при температуре не выше 30 градусов, без отбеливателя. Нельзя гладить по принту',
-    feedback: {
-        author:'Макар К.',
-        dete:'23 января 2023',
-        stars:5,
-    }
-},
-{
-    img: [MainImage,Image1,Image2,Image3,Image4],
-    price: '79.000 сум',
-    prevPrice: '119.000 сум',
-    discount:'',
-    desc: 'Мужская футболка хлопок Cyberpunk Samurai',
-    title: 'Cyberpunk Samurai',
-    article: 'Артикул: Cyber 03',
-    feedbacks: '512',
-    material: '92% хлопок, 8% эластан',
-    detailedDesc: 'Футболка из хлопка с добавлением эластана (аналог лайкры): за счет этого ткань немного тянется, хорошо держит форму и комфортно садится по фигуре. Силуэт приталенный, ориентирован на мужчин с широкими плечами и узкими бедрами. Понравится тем, кто хочет подчеркнуть достоинства своего торса и любит футболки “по фигуре”',
-    details: 'приталенный силуэт, круглый вырез ворота, длина до линии бедра, короткий рукав',
-    careRules: 'перед стиркой вывернуть наизнанку, стирка ручная или машинная в щадящем режиме при температуре не выше 30 градусов, без отбеливателя. Нельзя гладить по принту',
-    feedback: {
-        author:'Макар К.',
-        dete:'23 января 2023',
-        stars:5,
-    }
-},
-{
-    img: [MainImage,Image1,Image2,Image3,Image4],
-    price: '79.000 сум',
-    prevPrice: '119.000 сум',
-    discount:'',
-    desc: 'Мужская футболка хлопок Cyberpunk Samurai',
-    title: 'Cyberpunk Samurai',
-    article: 'Артикул: Cyber 03',
-    feedbacks: '512',
-    material: '92% хлопок, 8% эластан',
-    detailedDesc: 'Футболка из хлопка с добавлением эластана (аналог лайкры): за счет этого ткань немного тянется, хорошо держит форму и комфортно садится по фигуре. Силуэт приталенный, ориентирован на мужчин с широкими плечами и узкими бедрами. Понравится тем, кто хочет подчеркнуть достоинства своего торса и любит футболки “по фигуре”',
-    details: 'приталенный силуэт, круглый вырез ворота, длина до линии бедра, короткий рукав',
-    careRules: 'перед стиркой вывернуть наизнанку, стирка ручная или машинная в щадящем режиме при температуре не выше 30 градусов, без отбеливателя. Нельзя гладить по принту',
-    feedback: {
-        author:'Макар К.',
-        dete:'23 января 2023',
-        stars:5,
-    }
-},
-{
-    img: [MainImage,Image1,Image2,Image3,Image4],
-    price: '79.000 сум',
-    prevPrice: '119.000 сум',
-    discount:'',
-    desc: 'Мужская футболка хлопок Cyberpunk Samurai',
-    title: 'Cyberpunk Samurai',
-    article: 'Артикул: Cyber 03',
-    feedbacks: '512',
-    material: '92% хлопок, 8% эластан',
-    detailedDesc: 'Футболка из хлопка с добавлением эластана (аналог лайкры): за счет этого ткань немного тянется, хорошо держит форму и комфортно садится по фигуре. Силуэт приталенный, ориентирован на мужчин с широкими плечами и узкими бедрами. Понравится тем, кто хочет подчеркнуть достоинства своего торса и любит футболки “по фигуре”',
-    details: 'приталенный силуэт, круглый вырез ворота, длина до линии бедра, короткий рукав',
-    careRules: 'перед стиркой вывернуть наизнанку, стирка ручная или машинная в щадящем режиме при температуре не выше 30 градусов, без отбеливателя. Нельзя гладить по принту',
-    feedback: {
-        author:'Макар К.',
-        dete:'23 января 2023',
-        stars:5,
-    }
-},{
-    img: [MainImage,Image1,Image2,Image3,Image4],
-    price: '79.000 сум',
-    prevPrice: '119.000 сум',
-    discount:'',
-    desc: 'Мужская футболка хлопок Cyberpunk Samurai',
-    title: 'Cyberpunk Samurai',
-    article: 'Артикул: Cyber 03',
-    feedbacks: '512',
-    material: '92% хлопок, 8% эластан',
-    detailedDesc: 'Футболка из хлопка с добавлением эластана (аналог лайкры): за счет этого ткань немного тянется, хорошо держит форму и комфортно садится по фигуре. Силуэт приталенный, ориентирован на мужчин с широкими плечами и узкими бедрами. Понравится тем, кто хочет подчеркнуть достоинства своего торса и любит футболки “по фигуре”',
-    details: 'приталенный силуэт, круглый вырез ворота, длина до линии бедра, короткий рукав',
-    careRules: 'перед стиркой вывернуть наизнанку, стирка ручная или машинная в щадящем режиме при температуре не выше 30 градусов, без отбеливателя. Нельзя гладить по принту',
-    feedback: {
-        author:'Макар К.',
-        dete:'23 января 2023',
-        stars:5,
-    }
-},
-{
-    img: [MainImage,Image1,Image2,Image3,Image4],
-    price: '79.000 сум',
-    prevPrice: '119.000 сум',
-    discount:'',
-    desc: 'Мужская футболка хлопок Cyberpunk Samurai',
-    title: 'Cyberpunk Samurai',
-    article: 'Артикул: Cyber 03',
-    feedbacks: '512',
-    material: '92% хлопок, 8% эластан',
-    detailedDesc: 'Футболка из хлопка с добавлением эластана (аналог лайкры): за счет этого ткань немного тянется, хорошо держит форму и комфортно садится по фигуре. Силуэт приталенный, ориентирован на мужчин с широкими плечами и узкими бедрами. Понравится тем, кто хочет подчеркнуть достоинства своего торса и любит футболки “по фигуре”',
-    details: 'приталенный силуэт, круглый вырез ворота, длина до линии бедра, короткий рукав',
-    careRules: 'перед стиркой вывернуть наизнанку, стирка ручная или машинная в щадящем режиме при температуре не выше 30 градусов, без отбеливателя. Нельзя гладить по принту',
-    feedback: {
-        author:'Макар К.',
-        dete:'23 января 2023',
-        stars:5,
-    }
-},
-{
-    img: [MainImage,Image1,Image2,Image3,Image4],
-    price: '79.000 сум',
-    prevPrice: '119.000 сум',
-    discount:'',
-    desc: 'Мужская футболка хлопок Cyberpunk Samurai',
-    title: 'Cyberpunk Samurai',
-    article: 'Артикул: Cyber 03',
-    feedbacks: '512',
-    material: '92% хлопок, 8% эластан',
-    detailedDesc: 'Футболка из хлопка с добавлением эластана (аналог лайкры): за счет этого ткань немного тянется, хорошо держит форму и комфортно садится по фигуре. Силуэт приталенный, ориентирован на мужчин с широкими плечами и узкими бедрами. Понравится тем, кто хочет подчеркнуть достоинства своего торса и любит футболки “по фигуре”',
-    details: 'приталенный силуэт, круглый вырез ворота, длина до линии бедра, короткий рукав',
-    careRules: 'перед стиркой вывернуть наизнанку, стирка ручная или машинная в щадящем режиме при температуре не выше 30 градусов, без отбеливателя. Нельзя гладить по принту',
-    feedback: {
-        author:'Макар К.',
-        dete:'23 января 2023',
-        stars:5,
-    }
-},
-{
-    img: [MainImage,Image1,Image2,Image3,Image4],
-    price: '79.000 сум',
-    prevPrice: '119.000 сум',
-    discount:'',
-    desc: 'Мужская футболка хлопок Cyberpunk Samurai',
-    title: 'Cyberpunk Samurai',
-    article: 'Артикул: Cyber 03',
-    feedbacks: '512',
-    material: '92% хлопок, 8% эластан',
-    detailedDesc: 'Футболка из хлопка с добавлением эластана (аналог лайкры): за счет этого ткань немного тянется, хорошо держит форму и комфортно садится по фигуре. Силуэт приталенный, ориентирован на мужчин с широкими плечами и узкими бедрами. Понравится тем, кто хочет подчеркнуть достоинства своего торса и любит футболки “по фигуре”',
-    details: 'приталенный силуэт, круглый вырез ворота, длина до линии бедра, короткий рукав',
-    careRules: 'перед стиркой вывернуть наизнанку, стирка ручная или машинная в щадящем режиме при температуре не выше 30 градусов, без отбеливателя. Нельзя гладить по принту',
-    feedback: {
-        author:'Макар К.',
-        dete:'23 января 2023',
-        stars:5,
-    }
-},
-{
-    img: [MainImage,Image1,Image2,Image3,Image4],
-    price: '79.000 сум',
-    prevPrice: '119.000 сум',
-    discount:'',
-    desc: 'Мужская футболка хлопок Cyberpunk Samurai',
-    title: 'Cyberpunk Samurai',
-    article: 'Артикул: Cyber 03',
-    feedbacks: '512',
-    material: '92% хлопок, 8% эластан',
-    detailedDesc: 'Футболка из хлопка с добавлением эластана (аналог лайкры): за счет этого ткань немного тянется, хорошо держит форму и комфортно садится по фигуре. Силуэт приталенный, ориентирован на мужчин с широкими плечами и узкими бедрами. Понравится тем, кто хочет подчеркнуть достоинства своего торса и любит футболки “по фигуре”',
-    details: 'приталенный силуэт, круглый вырез ворота, длина до линии бедра, короткий рукав',
-    careRules: 'перед стиркой вывернуть наизнанку, стирка ручная или машинная в щадящем режиме при температуре не выше 30 градусов, без отбеливателя. Нельзя гладить по принту',
-    feedback: {
-        author:'Макар К.',
-        dete:'23 января 2023',
-        stars:5,
-    }
-},
-{
-    img: [MainImage,Image1,Image2,Image3,Image4],
-    price: '79.000 сум',
-    prevPrice: '119.000 сум',
-    discount:'',
-    desc: 'Мужская футболка хлопок Cyberpunk Samurai',
-    title: 'Cyberpunk Samurai',
-    article: 'Артикул: Cyber 03',
-    feedbacks: '512',
-    material: '92% хлопок, 8% эластан',
-    detailedDesc: 'Футболка из хлопка с добавлением эластана (аналог лайкры): за счет этого ткань немного тянется, хорошо держит форму и комфортно садится по фигуре. Силуэт приталенный, ориентирован на мужчин с широкими плечами и узкими бедрами. Понравится тем, кто хочет подчеркнуть достоинства своего торса и любит футболки “по фигуре”',
-    details: 'приталенный силуэт, круглый вырез ворота, длина до линии бедра, короткий рукав',
-    careRules: 'перед стиркой вывернуть наизнанку, стирка ручная или машинная в щадящем режиме при температуре не выше 30 градусов, без отбеливателя. Нельзя гладить по принту',
-    feedback: {
-        author:'Макар К.',
-        dete:'23 января 2023',
-        stars:5,
-    }
-},{
-    img: [MainImage,Image1,Image2,Image3,Image4],
-    price: '79.000 сум',
-    prevPrice: '119.000 сум',
-    discount:'',
-    desc: 'Мужская футболка хлопок Cyberpunk Samurai',
-    title: 'Cyberpunk Samurai',
-    article: 'Артикул: Cyber 03',
-    feedbacks: '512',
-    material: '92% хлопок, 8% эластан',
-    detailedDesc: 'Футболка из хлопка с добавлением эластана (аналог лайкры): за счет этого ткань немного тянется, хорошо держит форму и комфортно садится по фигуре. Силуэт приталенный, ориентирован на мужчин с широкими плечами и узкими бедрами. Понравится тем, кто хочет подчеркнуть достоинства своего торса и любит футболки “по фигуре”',
-    details: 'приталенный силуэт, круглый вырез ворота, длина до линии бедра, короткий рукав',
-    careRules: 'перед стиркой вывернуть наизнанку, стирка ручная или машинная в щадящем режиме при температуре не выше 30 градусов, без отбеливателя. Нельзя гладить по принту',
-    feedback: {
-        author:'Макар К.',
-        dete:'23 января 2023',
-        stars:5,
-    }
-},{
-    img: [MainImage,Image1,Image2,Image3,Image4],
-    price: '79.000 сум',
-    prevPrice: '119.000 сум',
-    discount:'',
-    desc: 'Мужская футболка хлопок Cyberpunk Samurai',
-    title: 'Cyberpunk Samurai',
-    article: 'Артикул: Cyber 03',
-    feedbacks: '512',
-    material: '92% хлопок, 8% эластан',
-    detailedDesc: 'Футболка из хлопка с добавлением эластана (аналог лайкры): за счет этого ткань немного тянется, хорошо держит форму и комфортно садится по фигуре. Силуэт приталенный, ориентирован на мужчин с широкими плечами и узкими бедрами. Понравится тем, кто хочет подчеркнуть достоинства своего торса и любит футболки “по фигуре”',
-    details: 'приталенный силуэт, круглый вырез ворота, длина до линии бедра, короткий рукав',
-    careRules: 'перед стиркой вывернуть наизнанку, стирка ручная или машинная в щадящем режиме при температуре не выше 30 градусов, без отбеливателя. Нельзя гладить по принту',
-    feedback: {
-        author:'Макар К.',
-        dete:'23 января 2023',
-        stars:5,
-    }
-},
-{
-    img: [MainImage,Image1,Image2,Image3,Image4],
-    price: '79.000 сум',
-    prevPrice: '119.000 сум',
-    discount:'',
-    desc: 'Мужская футболка хлопок Cyberpunk Samurai',
-    title: 'Cyberpunk Samurai',
-    article: 'Артикул: Cyber 03',
-    feedbacks: '512',
-    material: '92% хлопок, 8% эластан',
-    detailedDesc: 'Футболка из хлопка с добавлением эластана (аналог лайкры): за счет этого ткань немного тянется, хорошо держит форму и комфортно садится по фигуре. Силуэт приталенный, ориентирован на мужчин с широкими плечами и узкими бедрами. Понравится тем, кто хочет подчеркнуть достоинства своего торса и любит футболки “по фигуре”',
-    details: 'приталенный силуэт, круглый вырез ворота, длина до линии бедра, короткий рукав',
-    careRules: 'перед стиркой вывернуть наизнанку, стирка ручная или машинная в щадящем режиме при температуре не выше 30 градусов, без отбеливателя. Нельзя гладить по принту',
-    feedback: {
-        author:'Макар К.',
-        dete:'23 января 2023',
-        stars:5,
-    }
-},
-{
-    img: [MainImage,Image1,Image2,Image3,Image4],
-    price: '79.000 сум',
-    prevPrice: '119.000 сум',
-    discount:'',
-    desc: 'Мужская футболка хлопок Cyberpunk Samurai',
-    title: 'Cyberpunk Samurai',
-    article: 'Артикул: Cyber 03',
-    feedbacks: '512',
-    material: '92% хлопок, 8% эластан',
-    detailedDesc: 'Футболка из хлопка с добавлением эластана (аналог лайкры): за счет этого ткань немного тянется, хорошо держит форму и комфортно садится по фигуре. Силуэт приталенный, ориентирован на мужчин с широкими плечами и узкими бедрами. Понравится тем, кто хочет подчеркнуть достоинства своего торса и любит футболки “по фигуре”',
-    details: 'приталенный силуэт, круглый вырез ворота, длина до линии бедра, короткий рукав',
-    careRules: 'перед стиркой вывернуть наизнанку, стирка ручная или машинная в щадящем режиме при температуре не выше 30 градусов, без отбеливателя. Нельзя гладить по принту',
-    feedback: {
-        author:'Макар К.',
-        dete:'23 января 2023',
-        stars:5,
-    }
-},
-{
-    img: [MainImage,Image1,Image2,Image3,Image4],
-    price: '79.000 сум',
-    prevPrice: '119.000 сум',
-    discount:'',
-    desc: 'Мужская футболка хлопок Cyberpunk Samurai',
-    title: 'Cyberpunk Samurai',
-    article: 'Артикул: Cyber 03',
-    feedbacks: '512',
-    material: '92% хлопок, 8% эластан',
-    detailedDesc: 'Футболка из хлопка с добавлением эластана (аналог лайкры): за счет этого ткань немного тянется, хорошо держит форму и комфортно садится по фигуре. Силуэт приталенный, ориентирован на мужчин с широкими плечами и узкими бедрами. Понравится тем, кто хочет подчеркнуть достоинства своего торса и любит футболки “по фигуре”',
-    details: 'приталенный силуэт, круглый вырез ворота, длина до линии бедра, короткий рукав',
-    careRules: 'перед стиркой вывернуть наизнанку, стирка ручная или машинная в щадящем режиме при температуре не выше 30 градусов, без отбеливателя. Нельзя гладить по принту',
-    feedback: {
-        author:'Макар К.',
-        dete:'23 января 2023',
-        stars:5,
-    }
-},
-{
-    img: [MainImage,Image1,Image2,Image3,Image4],
-    price: '79.000 сум',
-    prevPrice: '119.000 сум',
-    discount:'',
-    desc: 'Мужская футболка хлопок Cyberpunk Samurai',
-    title: 'Cyberpunk Samurai',
-    article: 'Артикул: Cyber 03',
-    feedbacks: '512',
-    material: '92% хлопок, 8% эластан',
-    detailedDesc: 'Футболка из хлопка с добавлением эластана (аналог лайкры): за счет этого ткань немного тянется, хорошо держит форму и комфортно садится по фигуре. Силуэт приталенный, ориентирован на мужчин с широкими плечами и узкими бедрами. Понравится тем, кто хочет подчеркнуть достоинства своего торса и любит футболки “по фигуре”',
-    details: 'приталенный силуэт, круглый вырез ворота, длина до линии бедра, короткий рукав',
-    careRules: 'перед стиркой вывернуть наизнанку, стирка ручная или машинная в щадящем режиме при температуре не выше 30 градусов, без отбеливателя. Нельзя гладить по принту',
-    feedback: {
-        author:'Макар К.',
-        dete:'23 января 2023',
-        stars:5,
-    }
-},{
-    img: [MainImage,Image1,Image2,Image3,Image4],
-    price: '79.000 сум',
-    prevPrice: '119.000 сум',
-    discount:'',
-    desc: 'Мужская футболка хлопок Cyberpunk Samurai',
-    title: 'Cyberpunk Samurai',
-    article: 'Артикул: Cyber 03',
-    feedbacks: '512',
-    material: '92% хлопок, 8% эластан',
-    detailedDesc: 'Футболка из хлопка с добавлением эластана (аналог лайкры): за счет этого ткань немного тянется, хорошо держит форму и комфортно садится по фигуре. Силуэт приталенный, ориентирован на мужчин с широкими плечами и узкими бедрами. Понравится тем, кто хочет подчеркнуть достоинства своего торса и любит футболки “по фигуре”',
-    details: 'приталенный силуэт, круглый вырез ворота, длина до линии бедра, короткий рукав',
-    careRules: 'перед стиркой вывернуть наизнанку, стирка ручная или машинная в щадящем режиме при температуре не выше 30 градусов, без отбеливателя. Нельзя гладить по принту',
-    feedback: {
-        author:'Макар К.',
-        dete:'23 января 2023',
-        stars:5,
-    }
-},]
-
-
-
+import axios from 'axios'
 
 function Catalogue() {
     let location = useLocation()
     const isHome = location.pathname.split('/')[1] !== 'catalogue'
     const navigate = useNavigate();
-    const params = useParams()['*']?.split('/');
-    const [filterBy, setFilterBy] = useState('')
+    const [searchParams, setSearchParams] = useSearchParams();
+    const [filterBy, setFilterBy] = useState(searchParams.get('new') || searchParams.get('bestseller') || searchParams.get('big_discount'))
     const [view, setView] = useState(Grid)
+    const [categories, setCategories] = useState([])
+    const [mainCategory, setMainCategory] = useState(searchParams.get('category'))
+    console.log(mainCategory)
+    const [types, setTypes] = useState([])
+    const [end_amount, setEnd_amount] = useState(searchParams.get('end_amount') || 190000)
+    const [start_amount, setStart_amount] = useState(searchParams.get('start_amount') || 39000)
+    const [size, setSize] = useState(searchParams.get('size')=== null ? [] : searchParams.get('size').split(','))
+    const [color, setColor] = useState(searchParams.get('color')=== null ? [] : searchParams.get('color').split(','))
+    const [products, setProducts] = useState([])
+    const [Type, setType] = useState(searchParams.get('type_of_clothes'))
+
+    useEffect(() => {
+        axios.get('https://api.foryou.uz/api/getCategories')
+        .then(response => setCategories(response.data.data))
+
+        axios.get('https://api.foryou.uz/api/getTypeClothes')
+        .then(response => setTypes(response.data.data))
+    },[])
+
+    useEffect(() => {
+        axios.get(`https://api.foryou.uz/api/getProducts?${mainCategory!=null ? `&category=${mainCategory}`: ''}${size[0] != null ? `&size=${size}` : ''}${color[0] != null ? `&color=${color}` : ''}${Type != null ? `&type_of_clothes=${Type}` : ''}${filterBy != null ? `&${filterBy}=1` : ''}${start_amount != null ? `&start_amount=${start_amount}` : ''}${end_amount != null ? `&end_amount=${end_amount}` : ''}`)
+        .then(response => setProducts(response.data.data))
+        if(isHome){
+            navigate(`${isHome ? '/?' : '/catalogue?'}${mainCategory!=null ? `&category=${mainCategory}`: ''}${size[0] != null ? `&size=${size}` : ''}${color[0] != null ? `&color=${color}` : ''}${Type != null ? `&type_of_clothes=${Type}` : ''}${filterBy != null ? `&${filterBy}=1` : ''}`)
+        }
+        else{
+                    navigate(`${isHome ? '/?' : '/catalogue?'}${mainCategory!=null ? `&category=${mainCategory}`: ''}${size[0] != null ? `&size=${size}` : ''}${color[0] != null ? `&color=${color}` : ''}${Type != null ? `&type_of_clothes=${Type}` : ''}${filterBy != null ? `&${filterBy}=1` : ''}${start_amount != null ? `&start_amount=${start_amount}` : ''}${end_amount != null ? `&end_amount=${end_amount}` : ''}`)
+        }
+
+
+    },[mainCategory,size,color,Type,filterBy, end_amount, start_amount])
 
     function HandleFilter(filter){
         if(filter === filterBy){
@@ -447,27 +81,44 @@ function Catalogue() {
         <div className='wrapper' id='catalogue'>
             <div className='container'>
                 <div className='catalogue'>
-                    <h2>Каталог</h2>
+                    <h2
+                     onClick={() => {
+                        navigate('/catalogue')
+                        setMainCategory(null)
+                    }}
+                    >Каталог</h2>
 
                     <ul className='catalogue-list'>
-                        {Categories.map(category => 
-                        <li key={category.title}>
+                        {categories.map(category => 
+                        <li key={category.name}>
                             <div>
                                 <h4 
-                                    style={{color: params?.indexOf(category.title) >= 0 && '#5900E6'}}
-                                    onClick={() => navigate(`/catalogue/${category.title}/`)}>{category.title}
+                                    style={{
+                                        color: (category.id === mainCategory ||
+                                        (category.sub_categories.filter(sub_category => sub_category.id === mainCategory).length > 0))
+                                        && '#5900E6'}}
+                                    onClick={() => 
+                                    {
+                                    if(isHome){
+                                        navigate(`/catalogue?&category=${category.id}`)
+                                        setMainCategory(category.id)
+                                    }
+                                    setMainCategory(category.id)
+                                    }}>{category.name}
                                 </h4><span>23</span>   
                             </div> 
 
                             <ul className='post-category'>
                                 {
-                                params?.indexOf(`${category.title}`) >= 0 && 
-                                category?.categories?.map(print => 
+                                (mainCategory === category.id ||
+                                (category.sub_categories.filter(sub_category => sub_category.id === mainCategory).length > 0)    
+                                ) && 
+                                category?.sub_categories?.map(print => 
                                 <li
-                                    key={print}
-                                    style={{color: params?.indexOf(print) >= 0 && '#5900E6'}}
-                                    onClick={() => navigate(`${category.title}/${print}`)}
-                                >{print}</li>)
+                                    key={print.name}
+                                    style={{color: print.id === mainCategory && '#5900E6'}}
+                                    onClick={() => setMainCategory(print.id)}
+                                >{print.name}</li>)
                                 }
                             </ul>
                         </li>)}
@@ -481,18 +132,18 @@ function Catalogue() {
                     <ul className='catalogue-list'>
                         {types.map(type => 
                             <li 
-                            key={type} 
-                            onClick={() => navigate(`${type}`)}
-                            style={{color: params?.indexOf(type) >= 0 && '#5900E6'}}
-                            ><div><h4>{type}</h4></div></li>
+                            key={type.id} 
+                            onClick={() => {setType(type.id)}}
+                            style={{color: Type === type.id && '#5900E6'}}
+                            ><div><h4>{type.name}</h4></div></li>
                         )}
                     </ul>
 
-                    <Price/>
+                    <Price end_amount={end_amount} setEnd_amount={setEnd_amount} start_amount={start_amount} setStart_amount={setStart_amount}/>
 
-                    <Size/>
+                    <Size Size={size} setSize={setSize}/>
 
-                    <Color/>
+                    <Color color={color} setColor={setColor}/>
                 </div>}
 
             </div>
@@ -520,24 +171,24 @@ function Catalogue() {
 
                 <div className='container filters'>
                     <div 
-                        className= {filterBy === 'Хиты продаж' ? 'filter-by active' : 'filter-by'}
-                        onClick={() => HandleFilter('Хиты продаж')}
+                        className= {filterBy === 'bestseller' ? 'filter-by active' : 'filter-by'}
+                        onClick={() => HandleFilter('bestseller')}
                     >
                         <img src={Hit} alt='hit icon'/>
                         <h4>Хиты продаж</h4>
                     </div>
 
                     <div 
-                        className= {filterBy === 'Большие скидки' ? 'filter-by active' : 'filter-by'}
-                        onClick={() => HandleFilter('Большие скидки')}    
+                        className= {filterBy === 'big_discount' ? 'filter-by active' : 'filter-by'}
+                        onClick={() => HandleFilter('big_discount')}    
                     >
                         <img src={Tag} alt='hit icon'/>
                         <h4>Большие скидки</h4>
                     </div>
 
                     <div 
-                        className= {filterBy === 'Самые новые' ? 'filter-by active' : 'filter-by'}
-                        onClick={() => HandleFilter('Самые новые')}    
+                        className= {filterBy === 'new' ? 'filter-by active' : 'filter-by'}
+                        onClick={() => HandleFilter('new')}    
                     >
                         <img src={New} alt='hit icon'/>
                         <h4>Самые новые</h4>
@@ -548,8 +199,8 @@ function Catalogue() {
                     <Carousel cols={3} gap={8}>
                         <Carousel.Item>
                             <div 
-                                className= {filterBy === 'Хиты продаж' ? 'filter-by active' : 'filter-by'}
-                                onClick={() => HandleFilter('Хиты продаж')}
+                                className= {filterBy === 'bestseller' ? 'filter-by active' : 'filter-by'}
+                                onClick={() => HandleFilter('bestseller')}
                             >
                                 <img src={Hit} alt='hit icon'/>
                                 <h4>Хиты продаж</h4>
@@ -558,8 +209,8 @@ function Catalogue() {
 
                         <Carousel.Item>
                             <div 
-                                className= {filterBy === 'Большие скидки' ? 'filter-by active' : 'filter-by'}
-                                onClick={() => HandleFilter('Большие скидки')}    
+                                className= {filterBy === 'big_discount' ? 'filter-by active' : 'filter-by'}
+                                onClick={() => HandleFilter('big_discount')}    
                             >
                                 <img src={Tag} alt='hit icon'/>
                                 <h4>Большие скидки</h4>
@@ -568,8 +219,8 @@ function Catalogue() {
 
                         <Carousel.Item>
                             <div 
-                                className= {filterBy === 'Самые новые' ? 'filter-by active' : 'filter-by'}
-                                onClick={() => HandleFilter('Самые новые')}    
+                                className= {filterBy === 'new' ? 'filter-by active' : 'filter-by'}
+                                onClick={() => HandleFilter('new')}    
                             >
                                 <img src={New} alt='hit icon'/>
                                 <h4>Самые новые</h4>
@@ -577,8 +228,10 @@ function Catalogue() {
                         </Carousel.Item>
                     </Carousel>
                 </div>
-
+                {
+                    products &&
                 <Products products={products} view={view}/>
+                }
             </div>
         </div>
         

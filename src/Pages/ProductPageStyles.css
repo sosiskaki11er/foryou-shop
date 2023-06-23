@@ -308,6 +308,12 @@
     display: none;
 }
 
+.review-img{
+    width: 108px;
+    height: 108px;
+    border-radius: 4px;
+}
+
 @media screen and (max-width: 1420px){
     .show-img{
         max-width: 400px;

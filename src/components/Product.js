@@ -1,18 +1,31 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Heart from '../assets/icons/Heart.svg'
 import Carousel from 'better-react-carousel'
+import { useNavigate, useSearchParams } from 'react-router-dom'
 
-const sizes = ['XS (44-46)', 'S (44-46)', 'M (44-46)', 'L (44-46)', 'XL (44-46)', 'XXL (44-46)'];
+
 
 function Product({product}) {
-    const [img, setImg] = useState(product?.img[0])
-    const [Size, setSize] = useState([])
-    const [color, setColor] = useState(product.colors[0])
+    const navigate = useNavigate();
+    const [searchParams, setSearchParams] = useSearchParams();
+    const [img, setImg] = useState(product.image)
+    const [Size, setSize] = useState(searchParams.get('size')=== null ? [] : searchParams.get('size').split(','))
+    console.log(Size)
+    const [color, setColor] = useState(searchParams.get('color') || null)
     const [add, setAdd] = useState(false)
     const [fav, setFav] = useState(false)
 
-    function handleSize(size) {
+    useEffect(() => {
+        setImg(product.image)
+    },[product.image])
+
+    useEffect(() => {
+        navigate(`?${color!=null ? `color=${color}` : ''}${Size[0] != null ? `size=${Size}` : ''}`)
+        console.log(color)
         console.log(Size)
+    },[color, Size])
+
+    function handleSize(size) {
         if(Size.indexOf(size) >= 0) {
             setSize(Size.filter( item => item!=size))
         }
@@ -26,10 +39,10 @@ function Product({product}) {
         <div className='container'>
             <div className='container'>
                 <div className='gallery'>
-                    {product?.img.map( img => 
+                    {product?.foto_gallary?.map( img => 
                         <img src={img}
                         onMouseOver={() => setImg(img)}
-                        onMouseOut={() => setImg(product?.img[0])}
+                        onMouseOut={() => setImg(product.image)}
                         
                         />
                         )}
@@ -39,7 +52,7 @@ function Product({product}) {
                 
                 <div className='product-slider'>
                     <Carousel cols={1} showDots={true}>
-                    {product?.img.map( img => 
+                    {product?.foto_gallary?.map( img => 
                             <Carousel.Item>
                                 <img src={img}
                                 onMouseOver={() => setImg(img)}
@@ -54,17 +67,17 @@ function Product({product}) {
             
             <div className='product-info'>
                 <div className='product-info-header'>
-                    <h2 className='product-title'>{product.title}</h2>
+                    <h2 className='product-title'>{product.name}</h2>
 
                     <div className='container'>
-                        <h5>{product.article}</h5>
-                        <h5 className='feedback-num'>Отзывов: {product.feedbacks}</h5>
+                        <h5>{product.vendor_code}</h5>
+                        <h5 className='feedback-num'>Отзывов: {product.reviews?.length}</h5>
                     </div>  
                 </div>
 
                 <div className='product-prices'>
                     <h2 className='product-price'>{product.price}</h2>
-                    <h3 className='product-prev-price'>{product.prevPrice}</h3>
+                    <h3 className='product-prev-price'>{product.old_price}</h3>
                 </div>
 
                 <div className='product-selection'>   
@@ -74,33 +87,33 @@ function Product({product}) {
                     </div>
             
                     <div className='container sizes'>
-                        {sizes.map(size =>
+                        {product.sizes?.map(size =>
                             <div 
-                            className={Size.indexOf(size) >= 0 ? 'product-size active': 'product-size'}
-                            onClick={() => handleSize(size)}
+                            className={Size.indexOf(String(size.id)) >= 0 ? 'product-size active': 'product-size'}
+                            onClick={() => handleSize(String(size.id))}
                             >
-                                {size}
+                                {size.name}
                             </div>    
                         )}
                     </div>
 
                     <h5>Цвет:</h5>
                     <div className='container color'>
-                            {product.colors.map(colorImage => 
+                            {product.colors?.map(Color => 
                                 <img 
-                                src={colorImage} 
-                                className={colorImage === color ? 'selected': ''}
-                                onClick={() => setColor(colorImage)}
+                                src={product.image} 
+                                className={Color.id === color ? 'selected': ''}
+                                onClick={() => setColor(Color.id)}
                                 />    
                             )}
                     </div>
 
-                    <div className='container material'>Состав:<h5>{product.material}</h5></div>
+                    <div className='container material'>Состав:<h5>{product.compound}</h5></div>
                 </div>
 
                 <div className='product-prices mobile'>
                     <h2 className='product-price'>{product.price}</h2>
-                    <h3 className='product-prev-price'>{product.prevPrice}</h3>
+                    <h3 className='product-prev-price'>{product.old_price}</h3>
                 </div>
 
                 <div className='container buttons'>
@@ -123,11 +136,11 @@ function Product({product}) {
 
         <div className='about-product'>
             <h3>О товаре</h3>
-            <p>{product.detailedDesc}</p>
+            <p>{product.description}</p>
             <ul>
-                <li>Детали: {product.details}</li>
-                <li>Состав: {product.material}</li>
-                <li>Правила ухода: {product.careRules}</li>
+                <li>Детали: {product.description}</li>
+                <li>Состав: {product.compound}</li>
+                <li>Правила ухода: {product.description}</li>
             </ul>
         </div>
     </div>

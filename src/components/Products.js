@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import ProductCard from './ProductCard'
 import ArrowLeft from '../assets/icons/arrow left.svg'
 import ArrowRight from '../assets/icons/arrow right.svg'
@@ -9,14 +9,19 @@ import List from '../assets/icons/products-list.svg'
 
 function Products({products,view}) {
     const [page,setPage] = useState(1)
-    const [showProduct, setShowProduct] = useState(products.slice((page-1)*12,(page*12)))
+    const [showProduct, setShowProduct] = useState([...products.slice((page-1)*12,(page*12))])
+
     const [showAll, setShowAll] = useState(false)
     const HandleShowAll = () => {
         setShowProduct(products)
         setShowAll(true)
     }
+
+    useEffect(() => {
+        setShowProduct([...products.slice((page-1)*12,(page*12))])
+    }, [products])
+
     function HandlePage(page) {
-        console.log(page)
         if(page < 1) {
             return 0
         }
@@ -28,8 +33,9 @@ function Products({products,view}) {
         }
         setShowProduct(products.slice((page-1)*12,(page*12)))
     }
+
     const numOfPages = getPages(products)
-    console.log(numOfPages)
+
     function getPages(array){
         let numOfPages = Math.ceil(array.length/12)
         let result = []
@@ -38,6 +44,7 @@ function Products({products,view}) {
         }
         return result
     }
+
   return (
     <>
     <div className='products-list'>

@@ -29,22 +29,23 @@ function SliderNext() {
 }
 
 function Feedbacks({feedbacks}) {
+    console.log(feedbacks)
   return (
     <div className='wrapper' id='feedbacks'>
         <h2>Отзывы клиентов</h2>
 
         <div className='feedbacks-slider'>
             <Carousel cols={3} arrowLeft={<SliderPrev/>} arrowRight={<SliderNext/>}>
-                {feedbacks.map(feedback =>
-                    <Carousel.Item>
-                        <Feedback feedback={feedback} key={feedback.author}/>
+                {feedbacks?.map(feedback =>
+                    <Carousel.Item key={feedback.id}>
+                        <Feedback feedback={feedback} key={feedback.id}/>
                     </Carousel.Item>
                 )}
             </Carousel>
         </div>
 
         <div className='container feedbacks'>
-            {feedbacks.map(feedback => <Feedback feedback={feedback} key={feedback.author}/>)}
+            {feedbacks?.map(feedback => <Feedback feedback={feedback} key={feedback.id}/>)}
         </div>
 
         <div className='feedbacks-buttons'>

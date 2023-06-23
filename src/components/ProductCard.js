@@ -6,7 +6,8 @@ function ProductCard({product, banner}) {
   const navigate = useNavigate()
 
   return (
-    <div className={banner ? 'card-wrapper best' : 'card-wrapper'}>
+    <div className={banner ? 'card-wrapper best' : 'card-wrapper'}
+        onClick={() => navigate(`/product/${product.id}`)}>
         {!banner &&
         <div className='crown'>
             <img src={Crown} alt='crown icon'/>
@@ -14,24 +15,23 @@ function ProductCard({product, banner}) {
         
         }
         <img 
-        src={product.img[0]} 
-        alt='T shirt anime'
-        onClick={() => navigate(`/product/${product.title}`)}
-        onMouseOver={e => e.currentTarget.src = product.img[2] || product.img[0]}
-        onMouseOut={e => e.currentTarget.src = product.img[0]}
+        src={product.image} 
+        alt={product.name}
+        onMouseOver={e => e.currentTarget.src = product.foto_gallary[0] || product.image}
+        onMouseOut={e => e.currentTarget.src = product.image}
         />
         <div className='container'>
             <div>
             <h4 className='product-card-price'>{product.price}</h4>
-            <h5 className='product-card-prevprice'>{product.prevPrice}</h5>
+            <h5 className='product-card-prevprice'>{product.old_price}</h5>
             </div>
-            {product.discount &&
+            {product.discount > 0 &&
             <div className='discount'>
-                {product.discount}
+                {product.discount+ '%'}
             </div>
             }
         </div>
-        <p>{product.desc}</p>
+        <p>{product.short_description}</p>
     </div>
   )
 }

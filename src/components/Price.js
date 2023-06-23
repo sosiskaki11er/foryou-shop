@@ -1,10 +1,14 @@
 import React, { useState } from 'react'
 import Arrow from '../assets/icons/Arrow.svg'
+import { useNavigate } from 'react-router-dom'
 
-function Price() {
-    const [price, setPrice] = useState(39000)
-    function handleChange(e){
-        setPrice(e.target.value)
+function Price({end_amount, setEnd_amount, start_amount, setStart_amount}) {
+    function handleStartAmount(amount){
+        setStart_amount(amount)
+    }
+
+    function handleEndAmount(amount) {
+        setEnd_amount(amount)
     }
 
     function handleClick(){
@@ -24,9 +28,9 @@ function Price() {
             <input 
                 type='range' 
                 min={39000} 
-                max={9999777}
-                value={price}
-                onChange={e => handleChange(e)}
+                max={500000}
+                value={end_amount}
+                onChange={(e) => handleEndAmount(e.target.value)}
             />
 
             <div className='container'>
@@ -34,8 +38,9 @@ function Price() {
                 <span className='price-desc'>От</span>
                 
                 <input 
-                value={39000}
                 className='price-input'
+                value={start_amount}
+                onChange={(e) => handleStartAmount(e.target.value) }
                 /> 
 
                 <span className='som'>сум</span>  
@@ -47,9 +52,9 @@ function Price() {
                 <span className='price-desc'>До</span>   
 
                 <input
-                value={price}
-                onChange={e => handleChange(e)}
                 className='price-input'
+                value={end_amount}
+                onChange={(e) => handleEndAmount(e.target.value)}
                 />
 
                 <span className='som'>сум</span>
