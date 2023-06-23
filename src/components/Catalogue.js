@@ -35,6 +35,7 @@ function Catalogue() {
     const [color, setColor] = useState(searchParams.get('color')=== null ? [] : searchParams.get('color').split(','))
     const [products, setProducts] = useState([])
     const [Type, setType] = useState(searchParams.get('type_of_clothes'))
+    console.log(Type)
 
     useEffect(() => {
         axios.get('https://api.foryou.uz/api/getCategories')

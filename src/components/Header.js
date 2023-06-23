@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import TgIcon from '../assets/icons/ic_baseline-telegram.svg'
 import Search from './Search'
 import UserIcon from '../assets/icons/user.svg'
@@ -7,10 +7,17 @@ import Cart from './Cart'
 import Logo from './Logo'
 import Menu from '../assets/icons/menu.svg'
 import {useNavigate} from 'react-router-dom'
+import axios from 'axios'
 
 function Header() {
     const [search, setSearch] = useState(false)
     const navigate = useNavigate()
+    const [types, setTypes] = useState([])
+
+    useEffect(() => {
+        axios.get('https://api.foryou.uz/api/getTypeClothes')
+        .then(response => setTypes(response.data.data))
+    },[])
 
     const clickHandler = () => {
         setSearch(!search)
@@ -24,11 +31,9 @@ function Header() {
 
                     <nav>
                         <ul>
-                            <li><a onClick={() => navigate('/catalogue/Футболки')}>Футболки</a></li>
-                            <li><a onClick={() => navigate('/catalogue/Лонгсливы')}>Лонгслив</a></li>
-                            <li><a onClick={() => navigate('/catalogue/Свитшоты')}>Свитшоты</a></li>
-                            <li><a onClick={() => navigate('/catalogue/Худи')}>Худи</a></li>
-                            <li><a onClick={() => navigate('/catalogue/Кепки')}>Кепки</a></li>
+                            {types?.map(type => 
+                            <li><a onClick={() => navigate(`/catalogue?&type_of_clothes=${type.id}`)}>{type.name}</a></li>
+                                )}
                         </ul>
                     </nav>
                 </div>
