@@ -10,8 +10,8 @@ function Product({product}) {
     const [searchParams, setSearchParams] = useSearchParams();
     const [img, setImg] = useState(product.image)
     const [Size, setSize] = useState(searchParams.get('size')=== null ? [] : searchParams.get('size').split(','))
-    console.log(Size)
     const [color, setColor] = useState(searchParams.get('color') || null)
+    console.log(color)
     const [add, setAdd] = useState(false)
     const [fav, setFav] = useState(false)
 
@@ -20,7 +20,7 @@ function Product({product}) {
     },[product.image])
 
     useEffect(() => {
-        navigate(`?${color!=null ? `color=${color}` : ''}${Size[0] != null ? `size=${Size}` : ''}`)
+        navigate(`?${color!=null ? `&color=${color}` : ''}${Size[0] != null ? `&size=${Size}` : ''}`)
         console.log(color)
         console.log(Size)
     },[color, Size])
@@ -102,7 +102,7 @@ function Product({product}) {
                             {product.colors?.map(Color => 
                                 <img 
                                 src={product.image} 
-                                className={Color.id === color ? 'selected': ''}
+                                className={Color.id == color ? 'selected': ''}
                                 onClick={() => setColor(Color.id)}
                                 />    
                             )}

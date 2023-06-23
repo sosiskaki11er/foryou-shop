@@ -15,9 +15,7 @@ function getStars(starNum){
         for(let i=0; i < emptyNum;i++ ){
             result.push(EmptyStar)
         }
-        console.log(result)
     }
-    console.log(result)
     return result
 }
 

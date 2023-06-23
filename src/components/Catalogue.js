@@ -28,7 +28,6 @@ function Catalogue() {
     const [view, setView] = useState(Grid)
     const [categories, setCategories] = useState([])
     const [mainCategory, setMainCategory] = useState(searchParams.get('category'))
-    console.log(mainCategory)
     const [types, setTypes] = useState([])
     const [end_amount, setEnd_amount] = useState(searchParams.get('end_amount') || 190000)
     const [start_amount, setStart_amount] = useState(searchParams.get('start_amount') || 39000)

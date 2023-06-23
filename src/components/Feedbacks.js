@@ -29,7 +29,6 @@ function SliderNext() {
 }
 
 function Feedbacks({feedbacks}) {
-    console.log(feedbacks)
   return (
     <div className='wrapper' id='feedbacks'>
         <h2>Отзывы клиентов</h2>
