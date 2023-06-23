@@ -13,6 +13,11 @@
     gap: 6px;
 }
 
+.gallery > img{
+    width: 108px;
+    height: 108px;
+}
+
 #product{
     flex-direction: column;
 }
@@ -31,6 +36,7 @@
     width:580px ;
     flex-grow: 1;
     transition: 0.3s;
+    height: 580px;
 }
 
 .product-info{

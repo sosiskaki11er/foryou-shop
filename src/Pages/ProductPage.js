@@ -12,18 +12,24 @@ import BigDiscounts from '../components/BigDiscounts'
 import Feedbacks from '../components/Feedbacks'
 import Arrow from '../assets/icons/arrow-path.svg'
 import axios from 'axios'
-import { useParams } from 'react-router-dom'
+import { useLocation, useParams } from 'react-router-dom'
 
 
 
 function ProductPage() {
     const [product, setProduct] = useState({})
     const productId = useParams().id
+    const location = useLocation()
 
     useEffect(() => {
         axios.get(`https://api.foryou.uz/api/getProductCard/${productId}`)
         .then(response => setProduct(response.data.data))
     }, [])
+
+    useEffect(() => {
+        axios.get(`https://api.foryou.uz/api/getProductCard/${productId}`)
+        .then(response => setProduct(response.data.data))
+    }, [location])
   return (
     <>  
         <div className='wrapper'>
